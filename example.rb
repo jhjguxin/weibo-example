@@ -1,4 +1,6 @@
-%w(rubygems sinatra haml sass oauth pp json weibo).each { |dependency| require dependency }
+%w(rubygems bundler).each { |dependency| require dependency }
+Bundler.setup
+%w(sinatra haml oauth json weibo).each { |dependency| require dependency }
 enable :sessions
 Weibo::Config.api_key = "2942145647"
 Weibo::Config.api_secret = "5cc0026c470a25a6070237e07ade5f27"
