@@ -6,6 +6,9 @@ Weibo::Config.api_key = "2942145647"
 Weibo::Config.api_secret = "5cc0026c470a25a6070237e07ade5f27"
 
 get '/' do
+  puts
+  puts request.env.inspect
+  puts
   if session[:atoken]
     redirect "/friends_timeline"
   end
@@ -37,7 +40,7 @@ get '/connect' do
   oauth = Weibo::OAuth.new(Weibo::Config.api_key, Weibo::Config.api_secret)
   request_token = oauth.consumer.get_request_token
   session[:rtoken], session[:rsecret] = request_token.token, request_token.secret
-  redirect "#{request_token.authorize_url}&oauth_callback=#{request.env["REQUEST_URI"].gsub("connect", "")}callback"
+  redirect "#{request_token.authorize_url}&oauth_callback=http://#{request.env["HTTP_HOST"]}/callback"
 end
 
 get '/callback' do
